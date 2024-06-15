@@ -1,14 +1,20 @@
 #ifndef HEAPSORT_H
 #define HEAPSORT_H
 
+#include <QObject>
 #include <QVector>
 
-class HeapSort {
-public:
-    void sort(QVector<int>& data);
+class HeapSort : public QObject {
+    Q_OBJECT
 
-private:
-    void heapify(QVector<int>& data, int n, int i);
+public:
+    void heapify(QVector<int> &data, int n, int i);
+    void buildHeap(QVector<int> &data, int n);
+    void doStep(QVector<int> &data, int currentStep);
+
+signals:
+    void dataChanged(const QVector<int> &data);
+    void elementsSwapped(int index1, int index2);  // Добавим этот сигнал
 };
 
 #endif // HEAPSORT_H

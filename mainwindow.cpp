@@ -7,7 +7,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    QVector<int> data = generateRandomData(100, 1, 10000);
+    QVector<int> data = generateRandomData(200, 1, 10000);
     ui->graphicsView->setData(data);
     ui->statusbar->showMessage(QString("Массив из %1 значений").arg(data.length()));
 }

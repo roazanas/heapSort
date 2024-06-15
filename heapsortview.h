@@ -8,8 +8,7 @@
 #include <QResizeEvent>
 #include "heapsort.h"
 
-class HeapSortView : public QGraphicsView
-{
+class HeapSortView : public QGraphicsView {
     Q_OBJECT
 
 public:
@@ -21,9 +20,14 @@ protected:
 
 public slots:
     void doStep();
+    void onDataChanged(const QVector<int>& data);
+    void onElementsSwapped(int index1, int index2);
 
 private:
     void updateRectangles(QSize deltaSize = QSize(0, 0));
+    void updateRectangle(int index);
+    void resetRectangleColors();
+    void resetRectangleColor(int index); // Новый метод
     QGraphicsScene *scene;
     QTimer *timer;
     HeapSort heapSort;
@@ -31,6 +35,7 @@ private:
     QList<QGraphicsRectItem*> visualData;
     int currentStep;
     static QSize globalDeltaSize;
+    QSet<int> swappedIndices;
 };
 
 #endif // HEAPSORTVIEW_H
