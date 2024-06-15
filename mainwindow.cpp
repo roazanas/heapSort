@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QVector>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -8,11 +7,20 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    QVector<int> data = {5, 2, 8, 1, 9, 3};
+    QVector<int> data = generateRandomData(100, 1, 10000);
     ui->graphicsView->setData(data);
+    ui->statusbar->showMessage(QString("Массив из %1 значений").arg(data.length()));
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+QVector<int> MainWindow::generateRandomData(int size, int minValue, int maxValue) {
+    QVector<int> data(size);
+    for (int &value : data) {
+        value = QRandomGenerator::global()->bounded(minValue, maxValue);
+    }
+    return data;
 }

@@ -1,7 +1,4 @@
 #include "heapsort.h"
-#include <algorithm> // для std::swap
-
-HeapSort::HeapSort() {}
 
 void HeapSort::heapify(QVector<int>& data, int n, int i) {
     int largest = i;
@@ -29,11 +26,5 @@ void HeapSort::sort(QVector<int>& data) {
     for (int i = n - 1; i > 0; i--) {
         std::swap(data[0], data[i]);
         heapify(data, i, 0);
-    }
-}
-
-void HeapSort::doStep(QVector<int>& data, int currentStep) {
-    if (currentStep < data.size()) {
-        heapify(data, data.size(), currentStep);
     }
 }
