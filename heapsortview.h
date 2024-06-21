@@ -2,40 +2,29 @@
 #define HEAPSORTVIEW_H
 
 #include <QGraphicsView>
-#include <QGraphicsScene>
+#include <vector>
+#include "heapSort.h"
 #include <QTimer>
-#include <QGraphicsRectItem>
-#include <QResizeEvent>
-#include "heapsort.h"
 
 class HeapSortView : public QGraphicsView {
     Q_OBJECT
-
 public:
-    explicit HeapSortView(QWidget *parent = nullptr);
-    void setData(const QVector<int>& data);
+    HeapSortView(QWidget* parent = nullptr);
+    void setData(const std::vector<int>& data);
+    const std::vector<int>& getData() const;
+    void visualize();
 
-protected:
-    void resizeEvent(QResizeEvent *event) override;
+    // Публичные методы для управления таймером
+    void startAnimation();
+    void stopAnimation();
 
-public slots:
-    void doStep();
-    void onDataChanged(const QVector<int>& data);
-    void onElementsSwapped(int index1, int index2);
+private slots:
+    void animateSort();
 
 private:
-    void updateRectangles(QSize deltaSize = QSize(0, 0));
-    void updateRectangle(int index);
-    void resetRectangleColors();
-    void resetRectangleColor(int index); // Новый метод
-    QGraphicsScene *scene;
-    QTimer *timer;
-    HeapSort heapSort;
-    QVector<int> data;
-    QList<QGraphicsRectItem*> visualData;
-    int currentStep;
-    static QSize globalDeltaSize;
-    QSet<int> swappedIndices;
+    std::vector<int> data_;
+    HeapSort* heapSorter_;
+    QTimer* timer_;
 };
 
 #endif // HEAPSORTVIEW_H

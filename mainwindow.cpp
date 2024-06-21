@@ -1,26 +1,57 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
+#include "mainWindow.h"
+#include "heapSortView.h"
+#include <QVBoxLayout>
+#include <QPushButton>
+#include <QInputDialog>
+#include <vector>
+#include <QDebug>
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
-{
-    ui->setupUi(this);
+MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), heapSortView_(new HeapSortView(this)) {
+    QWidget* centralWidget = new QWidget(this);
+    QVBoxLayout* layout = new QVBoxLayout(centralWidget);
 
-    QVector<int> data = generateRandomData(200, 1, 10000);
-    ui->graphicsView->setData(data);
-    ui->statusbar->showMessage(QString("Массив из %1 значений").arg(data.length()));
+    QPushButton* sortButton = new QPushButton("Сортировать", this);
+    QPushButton* setDataButton = new QPushButton("Задать данные", this);
+
+    connect(sortButton, &QPushButton::clicked, this, &MainWindow::onSortButtonClicked);
+    connect(setDataButton, &QPushButton::clicked, this, &MainWindow::onSetDataButtonClicked);
+
+    layout->addWidget(heapSortView_);
+    layout->addWidget(sortButton);
+    layout->addWidget(setDataButton);
+
+    setCentralWidget(centralWidget);
+    setMinimumSize(800, 600);
 }
 
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
-
-QVector<int> MainWindow::generateRandomData(int size, int minValue, int maxValue) {
-    QVector<int> data(size);
-    for (int &value : data) {
-        value = QRandomGenerator::global()->bounded(minValue, maxValue);
+void MainWindow::onSortButtonClicked() {
+    qDebug() << "MainWindow::onSortButtonClicked - Sort button clicked";
+    std::vector<int> data = heapSortView_->getData();
+    if (data.empty()) {
+        qDebug() << "MainWindow::onSortButtonClicked - Data is empty, skipping sort";
+        return;
     }
-    return data;
+
+    heapSortView_->visualize();
+    heapSortView_->startAnimation();
+}
+
+void MainWindow::onSetDataButtonClicked() {
+    qDebug() << "MainWindow::onSetDataButtonClicked - Set data button clicked";
+    bool ok;
+    QString text = QInputDialog::getText(this, tr("Задать данные"),
+                                         tr("Введите числа, разделенные пробелами:"), QLineEdit::Normal,
+                                         "", &ok);
+    if (ok && !text.isEmpty()) {
+        QStringList stringList = text.split(' ');
+        std::vector<int> data;
+        for (const QString& str : stringList) {
+            data.push_back(str.toInt());
+        }
+
+        qDebug() << "MainWindow::onSetDataButtonClicked - New data set:" << data;
+
+        heapSortView_->setData(data);
+        heapSortView_->visualize();
+    }
 }

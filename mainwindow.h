@@ -2,27 +2,19 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QVector>
-#include <QRandomGenerator>
-#include "heapsortview.h"
+#include "heapSortView.h"
 
-QT_BEGIN_NAMESPACE
-namespace Ui {
-class MainWindow;
-}
-QT_END_NAMESPACE
-
-class MainWindow : public QMainWindow
-{
+class MainWindow : public QMainWindow {
     Q_OBJECT
-
 public:
-    explicit MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+    MainWindow(QWidget* parent = nullptr);
+
+private slots:
+    void onSortButtonClicked();
+    void onSetDataButtonClicked();
 
 private:
-    Ui::MainWindow *ui;
-    QVector<int> generateRandomData(int size, int minValue, int maxValue);
+    HeapSortView* heapSortView_;
 };
 
 #endif // MAINWINDOW_H

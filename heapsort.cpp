@@ -1,37 +1,79 @@
-#include "heapsort.h"
+#include "heapSort.h"
 
-void HeapSort::heapify(QVector<int> &data, int n, int i) {
+HeapSort::HeapSort(std::vector<int>& data) : data_(data), size_(data.size()), currentIdx_(0), sortedIdx_(data.size()), heapifyIdx_(0), heapifyStep_(true) {
+    qDebug() << "HeapSort::HeapSort - Created HeapSort object with data:" << data_;
+}
+
+void HeapSort::sort() {
+    qDebug() << "HeapSort::sort - Starting sort";
+    reset();
+    while (step()) {
+        qDebug() << "HeapSort::sort - Sort step completed, data:" << data_;
+    }
+    qDebug() << "HeapSort::sort - Sorting finished, data:" << data_;
+}
+
+const std::vector<int>& HeapSort::getData() const {
+    return data_;
+}
+
+void HeapSort::heapify(int n, int i) {
+    qDebug() << "HeapSort::heapify - Heapifying at index" << i << "with size" << n;
     int largest = i;
     int left = 2 * i + 1;
     int right = 2 * i + 2;
 
-    if (left < n && data[left] > data[largest])
+    if (left < n && data_[left] > data_[largest]) {
         largest = left;
-
-    if (right < n && data[right] > data[largest])
+    }
+    if (right < n && data_[right] > data_[largest]) {
         largest = right;
-
+    }
     if (largest != i) {
-        std::swap(data[i], data[largest]);
-        emit elementsSwapped(i, largest);
-        heapify(data, n, largest);
+        qDebug() << "HeapSort::heapify - Swapping elements at" << i << "and" << largest;
+        swap(data_[i], data_[largest]);
+        heapify(n, largest);
     }
 }
 
-void HeapSort::buildHeap(QVector<int> &data, int n) {
-    for (int i = n / 2 - 1; i >= 0; i--) {
-        heapify(data, n, i);
-    }
+void HeapSort::swap(int& a, int& b) {
+    qDebug() << "HeapSort::swap - Swapping" << a << "and" << b;
+    int temp = a;
+    a = b;
+    b = temp;
 }
 
-void HeapSort::doStep(QVector<int> &data, int currentStep) {
-    int n = data.size();
-    if (currentStep == 0) {
-        buildHeap(data, n);
+bool HeapSort::step() {
+    qDebug() << "HeapSort::step - Performing step";
+    if (heapifyStep_) {
+        qDebug() << "HeapSort::step - Heapify step";
+        if (heapifyIdx_ < size_ / 2 - 1) {
+            heapify(size_, heapifyIdx_);
+            heapifyIdx_++;
+        } else {
+            qDebug() << "HeapSort::step - Heapify phase finished";
+            heapifyStep_ = false;
+            heapifyIdx_ = size_ - 1;
+        }
     } else {
-        std::swap(data[0], data[n - currentStep]);
-        emit elementsSwapped(0, n - currentStep);
-        heapify(data, n - currentStep, 0);
+        qDebug() << "HeapSort::step - Sorting step";
+        if (heapifyIdx_ >= 0) {
+            swap(data_[0], data_[heapifyIdx_]);
+            heapify(heapifyIdx_, 0);
+            heapifyIdx_--;
+        } else {
+            qDebug() << "HeapSort::step - Sorting finished";
+            return false;
+        }
     }
-    emit dataChanged(data);
+    return true;
+}
+
+void HeapSort::reset() {
+    qDebug() << "HeapSort::reset - Resetting HeapSort";
+    size_ = data_.size();
+    currentIdx_ = 0;
+    sortedIdx_ = data_.size();
+    heapifyIdx_ = 0;
+    heapifyStep_ = true;
 }
