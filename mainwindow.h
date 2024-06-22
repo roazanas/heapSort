@@ -12,6 +12,7 @@ public:
 private slots:
     void onSortButtonClicked();
     void onSetDataButtonClicked();
+    void onGenerateRandomDataButtonClicked();
 
 private:
     HeapSortView* heapSortView_;

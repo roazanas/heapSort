@@ -5,6 +5,7 @@
 #include <QTimer>
 #include <algorithm>
 #include <QDebug>
+#include <random>
 
 HeapSortView::HeapSortView(QWidget* parent) : QGraphicsView(parent), heapSorter_(nullptr), timer_(new QTimer(this)) {
     setScene(new QGraphicsScene(this));
@@ -68,4 +69,18 @@ void HeapSortView::startAnimation() {
 void HeapSortView::stopAnimation() {
     qDebug() << "HeapSortView::stopAnimation - Stopping animation";
     timer_->stop();
+}
+
+void HeapSortView::generateRandomData(int n) {
+    std::vector<int> data(n);
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(1, 100);
+
+    for (int& val : data) {
+        val = dis(gen);
+    }
+
+    setData(data);
+    visualize();
 }

@@ -12,13 +12,16 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), heapSortView_(new
 
     QPushButton* sortButton = new QPushButton("Сортировать", this);
     QPushButton* setDataButton = new QPushButton("Задать данные", this);
+    QPushButton* generateRandomDataButton = new QPushButton("Случайные данные", this);
 
     connect(sortButton, &QPushButton::clicked, this, &MainWindow::onSortButtonClicked);
     connect(setDataButton, &QPushButton::clicked, this, &MainWindow::onSetDataButtonClicked);
+    connect(generateRandomDataButton, &QPushButton::clicked, this, &MainWindow::onGenerateRandomDataButtonClicked);
 
     layout->addWidget(heapSortView_);
     layout->addWidget(sortButton);
     layout->addWidget(setDataButton);
+    layout->addWidget(generateRandomDataButton);
 
     setCentralWidget(centralWidget);
     setMinimumSize(800, 600);
@@ -53,5 +56,14 @@ void MainWindow::onSetDataButtonClicked() {
 
         heapSortView_->setData(data);
         heapSortView_->visualize();
+    }
+}
+
+void MainWindow::onGenerateRandomDataButtonClicked() {
+    bool ok;
+    int n = QInputDialog::getInt(this, tr("Случайные данные"),
+                                 tr("Введите количество элементов:"), 10, 1, 100, 1, &ok);
+    if (ok) {
+        heapSortView_->generateRandomData(n);
     }
 }

@@ -18,6 +18,8 @@ public:
     void startAnimation();
     void stopAnimation();
 
+    void generateRandomData(int n);
+
 private slots:
     void animateSort();
 
