@@ -1,48 +1,46 @@
-#include "mainWindow.h"
-#include "heapSortView.h"
-#include <QVBoxLayout>
-#include <QPushButton>
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
+#include <QDebug>
 #include <QInputDialog>
 #include <vector>
-#include <QDebug>
+#include "heapSort.h"
+#include <random>
 
-MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), heapSortView_(new HeapSortView(this)) {
-    QWidget* centralWidget = new QWidget(this);
-    QVBoxLayout* layout = new QVBoxLayout(centralWidget);
+MainWindow::MainWindow(QWidget* parent) :
+    QMainWindow(parent),
+    ui(new Ui::MainWindow),
+    heapSorter_(new HeapSort(this)) {
+    ui->setupUi(this);
 
-    QPushButton* sortButton = new QPushButton("Сортировать", this);
-    QPushButton* setDataButton = new QPushButton("Задать данные", this);
-    QPushButton* generateRandomDataButton = new QPushButton("Случайные данные", this);
+    connect(ui->sortButton, &QPushButton::clicked, this, &MainWindow::onSortButtonClicked);
+    connect(ui->setDataButton, &QPushButton::clicked, this, &MainWindow::onSetDataButtonClicked);
+    connect(ui->generateRandomDataButton, &QPushButton::clicked, this, &MainWindow::onGenerateRandomDataButtonClicked);
+    connect(heapSorter_, &HeapSort::dataChanged, ui->graphicsView, &HeapSortView::setData);
+    connect(heapSorter_, &HeapSort::messageSent, this, &MainWindow::onMessageSent);
 
-    connect(sortButton, &QPushButton::clicked, this, &MainWindow::onSortButtonClicked);
-    connect(setDataButton, &QPushButton::clicked, this, &MainWindow::onSetDataButtonClicked);
-    connect(generateRandomDataButton, &QPushButton::clicked, this, &MainWindow::onGenerateRandomDataButtonClicked);
+    qDebug() << "MainWindow::MainWindow - Главное окно инициализировано";
+}
 
-    layout->addWidget(heapSortView_);
-    layout->addWidget(sortButton);
-    layout->addWidget(setDataButton);
-    layout->addWidget(generateRandomDataButton);
-
-    setCentralWidget(centralWidget);
-    setMinimumSize(800, 600);
+MainWindow::~MainWindow() {
+    delete ui;
+    qDebug() << "MainWindow::~MainWindow - Главное окно уничтожено";
 }
 
 void MainWindow::onSortButtonClicked() {
-    qDebug() << "MainWindow::onSortButtonClicked - Sort button clicked";
-    std::vector<int> data = heapSortView_->getData();
-    if (data.empty()) {
-        qDebug() << "MainWindow::onSortButtonClicked - Data is empty, skipping sort";
+    qDebug() << "MainWindow::onSortButtonClicked - Нажата кнопка сортировки";
+    if (ui->graphicsView->getData().empty()) {
+        qDebug() << "MainWindow::onSortButtonClicked - Данные пусты, пропуск сортировки";
         return;
     }
 
-    heapSortView_->visualize();
-    heapSortView_->startAnimation();
+    std::vector<int> data = ui->graphicsView->getData();
+    heapSorter_->sort(data);
 }
 
 void MainWindow::onSetDataButtonClicked() {
-    qDebug() << "MainWindow::onSetDataButtonClicked - Set data button clicked";
+    qDebug() << "MainWindow::onSetDataButtonClicked - Нажата кнопка задания данных";
     bool ok;
-    QString text = QInputDialog::getText(this, tr("Задать данные"),
+    QString text = QInputDialog::getText(this, tr("Ввод данных"),
                                          tr("Введите числа, разделенные пробелами:"), QLineEdit::Normal,
                                          "", &ok);
     if (ok && !text.isEmpty()) {
@@ -52,18 +50,35 @@ void MainWindow::onSetDataButtonClicked() {
             data.push_back(str.toInt());
         }
 
-        qDebug() << "MainWindow::onSetDataButtonClicked - New data set:" << data;
+        qDebug() << "MainWindow::onSetDataButtonClicked - Новые данные установлены:" << data;
 
-        heapSortView_->setData(data);
-        heapSortView_->visualize();
+        ui->graphicsView->setData(data);
+        ui->graphicsView->visualize();
     }
 }
 
 void MainWindow::onGenerateRandomDataButtonClicked() {
+    qDebug() << "MainWindow::onGenerateRandomDataButtonClicked - Нажата кнопка генерации случайных данных";
     bool ok;
-    int n = QInputDialog::getInt(this, tr("Случайные данные"),
-                                 tr("Введите количество элементов:"), 10, 1, 100, 1, &ok);
+    int n = QInputDialog::getInt(this, tr("Генерация случайных данных"),
+                                 tr("Введите количество элементов:"), 20, 1, 200, 1, &ok);
     if (ok) {
-        heapSortView_->generateRandomData(n);
+        std::vector<int> data(n);
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<> dis(1000, 10000);
+
+        for (int& val : data) {
+            val = dis(gen);
+        }
+
+        qDebug() << "MainWindow::onGenerateRandomDataButtonClicked - Сгенерированы случайные данные:" << data;
+
+        ui->graphicsView->setData(data);
+        ui->graphicsView->visualize();
     }
+}
+
+void MainWindow::onMessageSent(const QString& message) {
+    ui->listWidget->addItem(message);
 }

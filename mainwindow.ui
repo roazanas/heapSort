@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>822</width>
-    <height>647</height>
+    <width>1213</width>
+    <height>741</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -20,8 +20,8 @@
    <string>heapSort</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout">
-    <item>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0" rowspan="4">
      <widget class="HeapSortView" name="graphicsView">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -33,6 +33,65 @@
        <size>
         <width>800</width>
         <height>600</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <layout class="QVBoxLayout" name="buttonLayout">
+      <item>
+       <widget class="QPushButton" name="setDataButton">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Задать данные</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="generateRandomDataButton">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Случайные данные</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="sortButton">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Сортировать</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="0" column="1">
+     <widget class="QListWidget" name="listWidget">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>256</width>
+        <height>512</height>
        </size>
       </property>
      </widget>

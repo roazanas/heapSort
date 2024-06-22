@@ -2,27 +2,33 @@
 #define HEAPSORT_H
 
 #include <vector>
+#include <QObject>
 #include <QDebug>
+#include <QTimer>
 
-class HeapSort {
+class HeapSort : public QObject {
+    Q_OBJECT
 public:
-    HeapSort(std::vector<int>& data);
-    void sort();
-    const std::vector<int>& getData() const;
+    explicit HeapSort(QObject* parent = nullptr);
 
-    // Методы для анимации
-    bool step();
-    void reset();
+public slots:
+    void sort(std::vector<int>& data);
+
+signals:
+    void dataChanged(const std::vector<int>& data);
+    void messageSent(const QString& message);
+
+private slots:
+    void heapSortStep();
 
 private:
-    void heapify(int n, int i);
-    void swap(int& a, int& b);
-    std::vector<int>& data_;
-    int size_;
-    int currentIdx_;
-    int sortedIdx_;
-    int heapifyIdx_;
-    bool heapifyStep_;
+    void heapify(std::vector<int>& data, int n, int i);
+    void swap(std::vector<int>& data, int i1, int i2);
+
+    std::vector<int> data_;
+    int n_;
+    int i_;
+    QTimer timer_;
 };
 
 #endif // HEAPSORT_H
