@@ -12,6 +12,9 @@ MainWindow::MainWindow(QWidget* parent) :
     heapSorter_(new HeapSort(this)) {
     ui->setupUi(this);
 
+    QString gradientHtml = QString("<span style='color: rgba(144, 238, 144, 255);'>200</span>");
+    ui->animationDelayLabel->setText(QString("Задержка анимации: %1 мс").arg(gradientHtml));
+
     connect(ui->sortButton, &QPushButton::clicked, this, &MainWindow::onSortButtonClicked);
     connect(ui->setDataButton, &QPushButton::clicked, this, &MainWindow::onSetDataButtonClicked);
     connect(ui->generateRandomDataButton, &QPushButton::clicked, this, &MainWindow::onGenerateRandomDataButtonClicked);
@@ -100,7 +103,7 @@ void MainWindow::onMessageSent(const QString& message) {
 }
 
 void MainWindow::updateStatusBar(int arraySize, int iterations, int comparisons, int arrayAccesses) {
-    QString statusBarMessage = QString("Размер массива: %1\t|\tИтераций: %2\t|\tСравнений: %3\t|\tОбращений к массиву: %4")
+    QString statusBarMessage = QString("Размер массива: %1 | Итераций: %2 | Сравнений: %3 | Обращений к массиву: %4")
                                    .arg(arraySize)
                                    .arg(iterations)
                                    .arg(comparisons)
@@ -114,7 +117,10 @@ void MainWindow::onSortedIndexChanged(int index) {
 
 void MainWindow::on_animationDelaySlider_valueChanged(int value) {
     heapSorter_->setTimerDelay(value);
-    ui->animationDelayLabel->setText(QString("Задержка анимации: %1 мс").arg(value));
+
+    QString gradientHtml = QString("<span style='color: rgba(144, 238, 144, 255);'>%1</span>").arg(value);
+
+    ui->animationDelayLabel->setText(QString("Задержка анимации: %1 мс").arg(gradientHtml));
 }
 
 void MainWindow::onSortEnded() {

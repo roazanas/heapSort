@@ -19,6 +19,174 @@
   <property name="windowTitle">
    <string>heapSort</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">/* Основные стили */
+* {
+  background-color: #353535;
+  color: rgba(237, 208, 145, 255);
+  font: 700 12pt &quot;Segoe UI&quot;;
+}
+
+/* Окно */
+QMainWindow {
+  border: none;
+}
+
+/* Кнопки */
+QPushButton {
+  background-color: rgba(237, 208, 145, 255);
+  border: none;
+  padding: 10px 20px;
+  color: #353535;
+  border-radius: 15px;
+}
+
+QPushButton:hover {
+  background-color: rgba(214, 187, 120, 255); 
+  border: 2px solid #aaaaaa;
+}
+
+QPushButton:pressed {
+  background-color: rgba(166, 146, 101, 255);
+  border: 3px solid #aaaaaa;
+}
+
+/* Список */
+QListWidget {
+  background-color: #424242; 
+  border: 1px solid #555555;
+  color: #f0f0f0;
+  font-size: 9pt;
+}
+
+QListWidget::item {
+  padding: 5px;
+  border-bottom: 1px solid #555555; 
+}
+
+QListWidget::item:selected {
+  background-color: #505050; 
+}
+
+/* Стилизация слайдеров прокрутки */
+QScrollBar:horizontal {
+  background-color: transparent;
+  height: 12px; 
+  margin: 0px 0px 0px 0px;
+}
+
+QScrollBar:vertical {
+  background-color: transparent; 
+  width: 12px; 
+  margin: 0px 0px 0px 0px; 
+}
+
+QScrollBar::handle:horizontal {
+  background-color: rgba(180, 130, 90, 255); 
+  min-width: 20px; 
+  border-radius: 6px; 
+}
+QScrollBar::handle:vertical {
+  background-color: rgba(180, 130, 90, 255);
+  min-height: 20px; 
+  border-radius: 6px;
+}
+
+QScrollBar::handle:horizontal:hover {
+    background-color: rgba(200, 150, 110, 255);
+}
+QScrollBar::handle:vertical:hover {
+  background-color: rgba(200, 150, 110, 255); 
+}
+
+QScrollBar::handle:horizontal:pressed {
+  background-color: rgba(160, 110, 70, 255); 
+}
+QScrollBar::handle:vertical:pressed {
+  background-color: rgba(160, 110, 70, 255);
+}
+
+QScrollBar::add-line, 
+QScrollBar::sub-line {
+  background: none;
+  height: 0px;
+}
+
+QScrollBar::add-page, 
+QScrollBar::sub-page {
+  background: none;
+}
+
+/* Слайдер */
+QSlider::groove:horizontal {
+  background-color: #555555;
+  height: 8px;
+  border-radius: 4px;
+}
+
+QSlider::handle:horizontal {
+  background-color: #ed91bf;
+  width: 16px;
+  height: 16px;
+  margin: -4px 0;
+  border-radius: 8px;
+}
+
+QSlider::sub-page:horizontal {
+  background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, 
+    stop:0 rgba(237, 145, 191, 255), 
+    stop:0.5 rgba(237, 208, 145, 255), 
+    stop:1 rgba(144, 238, 144, 255));
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px; 
+}
+
+/* Статусбар */
+QStatusBar {
+  background-color: #424242;
+  padding: 5px;
+  border-top: 1px solid #555555;
+  color: #f0f0f0; 
+}
+
+/* Поле ввода */
+QLineEdit {
+  background-color: #424242;
+  color: #f0f0f0;
+  border: 1px solid #555555;
+  padding: 5px;
+  border-radius: 5px;
+  font: 700 12pt &quot;Segoe UI&quot;;
+}
+
+QLineEdit:focus {
+  border: 2px solid rgba(180, 130, 90, 255);
+}
+
+/* Спинбокс */
+QSpinBox {
+  /* Стилизуем как QLineEdit */
+  background-color: #424242;
+  color: #f0f0f0;
+  border: 1px solid #555555;
+  padding: 5px;
+  border-radius: 5px;
+  font: 700 12pt &quot;Segoe UI&quot;;
+}
+  /* Стили для кнопок */
+  QAbstractSpinBox::up-button, 
+  QAbstractSpinBox::down-button {
+    subcontrol-origin: border;
+    subcontrol-position: top right; /* или bottom right */
+    width: 20px;
+    background-color: transparent;
+    border: none;
+ }
+
+QSpinBox:focus {
+  border: 2px solid rgba(180, 130, 90, 255);
+}</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0" rowspan="4">
@@ -41,8 +209,14 @@
      <layout class="QVBoxLayout" name="buttonLayout">
       <item>
        <widget class="QLabel" name="animationDelayLabel">
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
         <property name="text">
          <string>Задержка анимации: 200 мс</string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::RichText</enum>
         </property>
        </widget>
       </item>
@@ -79,6 +253,9 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
         <property name="text">
          <string>Задать данные</string>
         </property>
@@ -92,6 +269,9 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
         <property name="text">
          <string>Случайные данные</string>
         </property>
@@ -104,6 +284,34 @@
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+  background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, 
+    stop:0 rgba(237, 145, 191, 255), 
+    stop:0.5 rgba(237, 208, 145, 255), 
+    stop:1 rgba(144, 238, 144, 255));
+  border: none;
+  padding: 10px 20px;
+  color: #353535;
+  border-radius: 15px;
+}
+
+QPushButton:hover {
+  background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:1,
+    stop:0 rgba(213, 131, 172, 255), 
+    stop:0.5 rgba(213, 187, 131, 255), 
+    stop:1 rgba(130, 214, 130, 255));
+  border: 2px solid #aaaaaa;
+}
+
+QPushButton:pressed {
+  background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, 
+    stop:0 rgba(166, 102, 134, 255), 
+    stop:0.5 rgba(166, 146, 102, 255), 
+    stop:1 rgba(101, 167, 101, 255)); 
+  border: 3px solid #aaaaaa;
+}</string>
         </property>
         <property name="text">
          <string>Сортировать</string>
