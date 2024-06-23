@@ -19,9 +19,12 @@ MainWindow::MainWindow(QWidget* parent) :
     connect(heapSorter_, &HeapSort::messageSent, this, &MainWindow::onMessageSent);
     connect(heapSorter_, &HeapSort::statusBarUpdated, this, &MainWindow::updateStatusBar);
     connect(heapSorter_, &HeapSort::sortedIndex, ui->graphicsView, &HeapSortView::onSortedIndexChanged);
+    connect(heapSorter_, &HeapSort::indexesToSwap, ui->graphicsView, &HeapSortView::setIndexesToSwap);
+    connect(heapSorter_, &HeapSort::sortEnded, ui->graphicsView, &HeapSortView::resetColors);
 
     qDebug() << "MainWindow::MainWindow - Главное окно инициализировано";
 }
+
 
 MainWindow::~MainWindow() {
     delete ui;

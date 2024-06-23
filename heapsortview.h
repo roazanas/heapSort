@@ -16,12 +16,17 @@ public:
 public slots:
     void startVisualization();
     void onSortedIndexChanged(int index);
+    void setIndexesToSwap(int index1, int index2);
+    void resetColors();
 
 private:
     std::vector<int> data_;
     QTimer* timer_;
 
     size_t sortedIndex_;
+    int highlightedIndex1_;
+    int highlightedIndex2_;
+
 };
 
 #endif // HEAPSORTVIEW_H

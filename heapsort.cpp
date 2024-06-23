@@ -38,6 +38,7 @@ void HeapSort::heapSortStep() {
         qDebug() << "HeapSort::heapSortStep - Сортировка завершена";
         emit messageSent(QString("Сортировка завершена"));
         timer_.stop();
+        emit sortEnded();
         return;
     }
 
@@ -82,8 +83,10 @@ void HeapSort::heapify(std::vector<int>& data, int n, int i) {
     emit statusBarUpdated(n_, iterations_, comparisons_, arrayAccesses_);
 }
 
+
 void HeapSort::swap(std::vector<int>& data, int i1, int i2) {
-    qDebug() << "HeapSort::swap - Обмен элементов " << i1 << " и " << i2;
+    emit indexesToSwap(i1, i2);
+    qDebug() << "HeapSort::swap - Обмен элементов" <<i1 <<"и" <<i2;
     int temp = data[i1];
     data[i1] = data[i2];
     data[i2] = temp;

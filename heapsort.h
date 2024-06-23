@@ -19,6 +19,8 @@ signals:
     void messageSent(const QString& message);
     void statusBarUpdated(int arraySize, int iterations, int comparisons, int arrayAccesses);
     void sortedIndex(int index);
+    void indexesToSwap(int index1, int index2);
+    void sortEnded();
 
 private slots:
     void heapSortStep();
