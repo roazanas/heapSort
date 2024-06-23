@@ -19,6 +19,9 @@ public slots:
     void setIndexesToSwap(int index1, int index2);
     void resetColors();
 
+protected:
+    void resizeEvent(QResizeEvent* event) override;
+
 private:
     std::vector<int> data_;
     QTimer* timer_;
@@ -26,6 +29,8 @@ private:
     size_t sortedIndex_;
     int highlightedIndex1_;
     int highlightedIndex2_;
+
+    bool finished = false;
 
 };
 

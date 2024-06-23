@@ -21,6 +21,7 @@ MainWindow::MainWindow(QWidget* parent) :
     connect(heapSorter_, &HeapSort::sortedIndex, ui->graphicsView, &HeapSortView::onSortedIndexChanged);
     connect(heapSorter_, &HeapSort::indexesToSwap, ui->graphicsView, &HeapSortView::setIndexesToSwap);
     connect(heapSorter_, &HeapSort::sortEnded, ui->graphicsView, &HeapSortView::resetColors);
+    connect(heapSorter_, &HeapSort::sortEnded, this, &MainWindow::onSortEnded);
 
     qDebug() << "MainWindow::MainWindow - Главное окно инициализировано";
 }
@@ -37,6 +38,10 @@ void MainWindow::onSortButtonClicked() {
         qDebug() << "MainWindow::onSortButtonClicked - Данные пусты, пропуск сортировки";
         return;
     }
+    ui->sortButton->setEnabled(false);
+    ui->setDataButton->setEnabled(false);
+    ui->generateRandomDataButton->setEnabled(false);
+    ui->animationDelaySlider->setEnabled(false);
 
     std::vector<int> data = ui->graphicsView->getData();
     heapSorter_->sort(data);
@@ -110,4 +115,11 @@ void MainWindow::onSortedIndexChanged(int index) {
 void MainWindow::on_animationDelaySlider_valueChanged(int value) {
     heapSorter_->setTimerDelay(value);
     ui->animationDelayLabel->setText(QString("Задержка анимации: %1 мс").arg(value));
+}
+
+void MainWindow::onSortEnded() {
+    ui->sortButton->setEnabled(true);
+    ui->setDataButton->setEnabled(true);
+    ui->generateRandomDataButton->setEnabled(true);
+    ui->animationDelaySlider->setEnabled(true);
 }

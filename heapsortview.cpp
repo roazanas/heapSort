@@ -16,14 +16,21 @@ void HeapSortView::setIndexesToSwap(int index1, int index2){
 }
 
 void HeapSortView::resetColors() {
+    highlightedIndex1_ = -1;
+    highlightedIndex2_ = -1;
     for (auto item : scene()->items()) {
         if (auto bar = qgraphicsitem_cast<QAbstractGraphicsShapeItem*>(item)) {
-            bar->setBrush(QBrush(QColor(144, 238, 144)));
+            QLinearGradient gradient(width(), 0, 0, height());
+            gradient.setColorAt(0, QColor(237, 145, 191));
+            gradient.setColorAt(1, QColor(144, 238, 144));
+            bar->setBrush(QBrush(gradient));
         }
     }
+    finished = true;
 }
 
 void HeapSortView::setData(const std::vector<int>& data) {
+    finished = false;
     data_ = data;
     qDebug() << "HeapSortView::setData - Установлены данные:" << data_;
     visualize();
@@ -73,4 +80,10 @@ void HeapSortView::startVisualization() {
 void HeapSortView::onSortedIndexChanged(int index) {
     sortedIndex_ = index;
     visualize();
+}
+
+void HeapSortView::resizeEvent(QResizeEvent* event) {
+    QGraphicsView::resizeEvent(event);
+    if (finished) visualize();
+    resetColors();
 }

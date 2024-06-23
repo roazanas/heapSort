@@ -23,8 +23,8 @@ private slots:
     void onMessageSent(const QString &message);
     void updateStatusBar(int arraySize, int iterations, int comparisons, int arrayAccesses);
     void onSortedIndexChanged(int index);
-
     void on_animationDelaySlider_valueChanged(int value);
+    void onSortEnded();
 
 private:
     Ui::MainWindow* ui;
