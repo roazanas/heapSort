@@ -30,7 +30,7 @@ void HeapSort::sort(std::vector<int>& data) {
     emit messageSent(QString("Куча построена, начало сортировки"));
     emit dataChanged(data_);
 
-    timer_.start(200);
+    timer_.start(timerDelay);
 }
 
 void HeapSort::heapSortStep() {
@@ -90,4 +90,5 @@ void HeapSort::swap(std::vector<int>& data, int i1, int i2) {
     int temp = data[i1];
     data[i1] = data[i2];
     data[i2] = temp;
+    emit dataChanged(data_);
 }

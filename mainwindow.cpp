@@ -106,3 +106,8 @@ void MainWindow::updateStatusBar(int arraySize, int iterations, int comparisons,
 void MainWindow::onSortedIndexChanged(int index) {
     ui->graphicsView->onSortedIndexChanged(index);
 }
+
+void MainWindow::on_animationDelaySlider_valueChanged(int value) {
+    heapSorter_->setTimerDelay(value);
+    ui->animationDelayLabel->setText(QString("Задержка анимации: %1 мс").arg(value));
+}

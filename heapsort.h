@@ -10,6 +10,7 @@ class HeapSort : public QObject {
     Q_OBJECT
 public:
     explicit HeapSort(QObject* parent = nullptr);
+    void setTimerDelay(int ms) { timerDelay = ms;};
 
 public slots:
     void sort(std::vector<int>& data);
@@ -33,6 +34,7 @@ private:
     int n_;
     int i_;
     QTimer timer_;
+    int timerDelay = 200;
 
     int iterations_;
     int comparisons_;

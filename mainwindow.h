@@ -24,6 +24,8 @@ private slots:
     void updateStatusBar(int arraySize, int iterations, int comparisons, int arrayAccesses);
     void onSortedIndexChanged(int index);
 
+    void on_animationDelaySlider_valueChanged(int value);
+
 private:
     Ui::MainWindow* ui;
     HeapSort* heapSorter_;
