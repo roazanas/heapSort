@@ -23,7 +23,7 @@ void HeapSortView::visualize() {
 
     int width = this->width();
     int height = this->height();
-    scene()->setSceneRect(0, 0, width-2, height-5);
+    scene()->setSceneRect(0, 0, width, height);
 
     qDebug() << "HeapSortView::visualize - Ширина сцены:" << width << ", высота:" << height;
 

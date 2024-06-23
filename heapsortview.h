@@ -13,7 +13,7 @@ public:
     const std::vector<int>& getData() const;
     void visualize();
 
-public slots: // startVisualization() теперь публичный слот
+public slots:
     void startVisualization();
 
 private:

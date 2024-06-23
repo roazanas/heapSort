@@ -21,6 +21,7 @@ private slots:
     void onSetDataButtonClicked();
     void onGenerateRandomDataButtonClicked();
     void onMessageSent(const QString &message);
+    void updateStatusBar(int arraySize, int iterations, int comparisons, int arrayAccesses);
 
 private:
     Ui::MainWindow* ui;

@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget* parent) :
     connect(ui->generateRandomDataButton, &QPushButton::clicked, this, &MainWindow::onGenerateRandomDataButtonClicked);
     connect(heapSorter_, &HeapSort::dataChanged, ui->graphicsView, &HeapSortView::setData);
     connect(heapSorter_, &HeapSort::messageSent, this, &MainWindow::onMessageSent);
+    connect(heapSorter_, &HeapSort::statusBarUpdated, this, &MainWindow::updateStatusBar);
 
     qDebug() << "MainWindow::MainWindow - Главное окно инициализировано";
 }
@@ -54,6 +55,8 @@ void MainWindow::onSetDataButtonClicked() {
 
         ui->graphicsView->setData(data);
         ui->graphicsView->visualize();
+        ui->listWidget->clear();
+        updateStatusBar(data.size(), 0, 0, 0);
     }
 }
 
@@ -76,9 +79,20 @@ void MainWindow::onGenerateRandomDataButtonClicked() {
 
         ui->graphicsView->setData(data);
         ui->graphicsView->visualize();
+        ui->listWidget->clear();
+        updateStatusBar(data.size(), 0, 0, 0);
     }
 }
 
 void MainWindow::onMessageSent(const QString& message) {
     ui->listWidget->addItem(message);
+}
+
+void MainWindow::updateStatusBar(int arraySize, int iterations, int comparisons, int arrayAccesses) {
+    QString statusBarMessage = QString("Размер массива: %1\t|\tИтераций: %2\t|\tСравнений: %3\t|\tОбращений к массиву: %4")
+                                   .arg(arraySize)
+                                   .arg(iterations)
+                                   .arg(comparisons)
+                                   .arg(arrayAccesses);
+    ui->statusbar->showMessage(statusBarMessage);
 }

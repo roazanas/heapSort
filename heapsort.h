@@ -17,6 +17,7 @@ public slots:
 signals:
     void dataChanged(const std::vector<int>& data);
     void messageSent(const QString& message);
+    void statusBarUpdated(int arraySize, int iterations, int comparisons, int arrayAccesses);
 
 private slots:
     void heapSortStep();
@@ -29,6 +30,10 @@ private:
     int n_;
     int i_;
     QTimer timer_;
+
+    int iterations_;
+    int comparisons_;
+    int arrayAccesses_;
 };
 
 #endif // HEAPSORT_H
