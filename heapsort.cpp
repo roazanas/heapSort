@@ -1,5 +1,6 @@
 #include "heapsort.h"
 #include <QDebug>
+#include <QThread>
 
 HeapSort::HeapSort(QObject* parent) : QObject(parent), n_(0), i_(0),
     iterations_(0), comparisons_(0), arrayAccesses_(0) {
@@ -19,8 +20,12 @@ void HeapSort::sort(std::vector<int>& data) {
     emit statusBarUpdated(n_, iterations_, comparisons_, arrayAccesses_);
 
     qDebug() << "HeapSort::sort - Начало сортировки";
-    emit messageSent(QString("Начало сортировки"));
+    // emit messageSent(QString("Начало сортировки"));
+    emit messageSent(QString("Начало построения кучи"));
+    buildHeap(data);
+}
 
+void HeapSort::buildHeap(std::vector<int> &data) {
     for (int j = n_ / 2 - 1; j >= 0; j--) {
         qDebug() << "HeapSort::sort - Построение кучи, элемент:" << j;
         heapify(data_, n_, j);
@@ -43,7 +48,7 @@ void HeapSort::heapSortStep() {
     }
 
     qDebug() << "HeapSort::heapSortStep - Шаг сортировки, итерация:" << iterations_;
-    emit messageSent(QString("Шаг сортировки, итерация: %1").arg(iterations_));
+    emit messageSent(QString("Шаг сортировки, итерация: %1").arg(iterations_+1));
 
     swap(data_, 0, i_);
     heapify(data_, i_, 0);

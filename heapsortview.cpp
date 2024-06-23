@@ -22,8 +22,10 @@ void HeapSortView::resetColors() {
         if (auto bar = qgraphicsitem_cast<QAbstractGraphicsShapeItem*>(item)) {
             QLinearGradient gradient(width(), 0, 0, height());
             gradient.setColorAt(0, QColor(237, 145, 191));
+            gradient.setColorAt(0.5, QColor(237, 208, 145));
             gradient.setColorAt(1, QColor(144, 238, 144));
             bar->setBrush(QBrush(gradient));
+            scene()->update();
         }
     }
     finished = true;
