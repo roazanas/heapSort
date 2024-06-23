@@ -18,6 +18,7 @@ MainWindow::MainWindow(QWidget* parent) :
     connect(heapSorter_, &HeapSort::dataChanged, ui->graphicsView, &HeapSortView::setData);
     connect(heapSorter_, &HeapSort::messageSent, this, &MainWindow::onMessageSent);
     connect(heapSorter_, &HeapSort::statusBarUpdated, this, &MainWindow::updateStatusBar);
+    connect(heapSorter_, &HeapSort::sortedIndex, ui->graphicsView, &HeapSortView::onSortedIndexChanged);
 
     qDebug() << "MainWindow::MainWindow - Главное окно инициализировано";
 }
@@ -57,6 +58,7 @@ void MainWindow::onSetDataButtonClicked() {
         ui->graphicsView->visualize();
         ui->listWidget->clear();
         updateStatusBar(data.size(), 0, 0, 0);
+        ui->graphicsView->onSortedIndexChanged(ui->graphicsView->getData().size());
     }
 }
 
@@ -64,7 +66,7 @@ void MainWindow::onGenerateRandomDataButtonClicked() {
     qDebug() << "MainWindow::onGenerateRandomDataButtonClicked - Нажата кнопка генерации случайных данных";
     bool ok;
     int n = QInputDialog::getInt(this, tr("Генерация случайных данных"),
-                                 tr("Введите количество элементов:"), 20, 1, 200, 1, &ok);
+                                 tr("Введите количество элементов:"), 20, 1, 100, 1, &ok);
     if (ok) {
         std::vector<int> data(n);
         std::random_device rd;
@@ -81,6 +83,7 @@ void MainWindow::onGenerateRandomDataButtonClicked() {
         ui->graphicsView->visualize();
         ui->listWidget->clear();
         updateStatusBar(data.size(), 0, 0, 0);
+        ui->graphicsView->onSortedIndexChanged(ui->graphicsView->getData().size());
     }
 }
 
@@ -95,4 +98,8 @@ void MainWindow::updateStatusBar(int arraySize, int iterations, int comparisons,
                                    .arg(comparisons)
                                    .arg(arrayAccesses);
     ui->statusbar->showMessage(statusBarMessage);
+}
+
+void MainWindow::onSortedIndexChanged(int index) {
+    ui->graphicsView->onSortedIndexChanged(index);
 }

@@ -15,10 +15,13 @@ public:
 
 public slots:
     void startVisualization();
+    void onSortedIndexChanged(int index);
 
 private:
     std::vector<int> data_;
     QTimer* timer_;
+
+    size_t sortedIndex_;
 };
 
 #endif // HEAPSORTVIEW_H

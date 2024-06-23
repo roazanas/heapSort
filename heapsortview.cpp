@@ -32,18 +32,28 @@ void HeapSortView::visualize() {
         return;
     }
 
-    int barWidth = width / static_cast<int>(data_.size());
+    int barWidth = std::floor(static_cast<double>(width) / data_.size());
     qDebug() << "HeapSortView::visualize - Ширина полосы:" << barWidth;
 
     for (size_t i = 0; i < data_.size(); ++i) {
         int barHeight = static_cast<int>(height * (static_cast<double>(data_[i]) / *std::max_element(data_.begin(), data_.end())));
-        QGraphicsRectItem* bar = new QGraphicsRectItem(i * barWidth, height - barHeight, barWidth, barHeight);
-        bar->setBrush(QBrush(QColor(142, 45, 197)));
+        QGraphicsRectItem* bar = new QGraphicsRectItem(i * barWidth, height - barHeight, barWidth-5, barHeight-5);
+        if (0 <= sortedIndex_ && sortedIndex_ <= i) {
+            bar->setBrush(QBrush(QColor(144, 238, 144)));
+        } else {
+            bar->setBrush(QBrush(QColor(142, 45, 197)));
+        }
         scene()->addItem(bar);
     }
+    setSceneRect(scene()->itemsBoundingRect());
 }
 
 void HeapSortView::startVisualization() {
     qDebug() << "HeapSortView::startVisualization - Запуск визуализации";
+    visualize();
+}
+
+void HeapSortView::onSortedIndexChanged(int index) {
+    sortedIndex_ = index;
     visualize();
 }

@@ -46,6 +46,7 @@ void HeapSort::heapSortStep() {
 
     swap(data_, 0, i_);
     heapify(data_, i_, 0);
+    emit sortedIndex(i_);
     i_--;
 
     emit dataChanged(data_);

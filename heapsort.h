@@ -18,6 +18,7 @@ signals:
     void dataChanged(const std::vector<int>& data);
     void messageSent(const QString& message);
     void statusBarUpdated(int arraySize, int iterations, int comparisons, int arrayAccesses);
+    void sortedIndex(int index);
 
 private slots:
     void heapSortStep();
