@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1213</width>
-    <height>741</height>
+    <height>782</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -49,6 +49,10 @@ QPushButton:hover {
 QPushButton:pressed {
   background-color: rgba(166, 146, 101, 255);
   border: 3px solid #aaaaaa;
+}
+
+QPushButton:disabled {
+  background-color: #555555;
 }
 
 /* Список */
@@ -139,6 +143,14 @@ QSlider::sub-page:horizontal {
     stop:1 rgba(144, 238, 144, 255));
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px; 
+}
+
+QSlider::handle:horizontal:disabled {
+  background-color: #424242;
+}
+
+QSlider::sub-page:horizontal:disabled {
+  background-color: #555555;
 }
 
 /* Статусбар */
@@ -311,6 +323,10 @@ QPushButton:pressed {
     stop:0.5 rgba(166, 146, 102, 255), 
     stop:1 rgba(101, 167, 101, 255)); 
   border: 3px solid #aaaaaa;
+}
+
+QPushButton:disabled {
+  background-color: #555555;
 }</string>
         </property>
         <property name="text">
