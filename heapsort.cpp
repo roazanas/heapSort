@@ -22,10 +22,10 @@ void HeapSort::sort(std::vector<int>& data) {
     qDebug() << "HeapSort::sort - Начало сортировки";
     // emit messageSent(QString("Начало сортировки"));
     emit messageSent(QString("Начало построения кучи"));
-    buildHeap(data);
+    buildHeap();
 }
 
-void HeapSort::buildHeap(std::vector<int> &data) {
+void HeapSort::buildHeap() {
     for (int j = n_ / 2 - 1; j >= 0; j--) {
         qDebug() << "HeapSort::sort - Построение кучи, элемент:" << j;
         heapify(data_, n_, j);

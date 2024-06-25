@@ -29,7 +29,7 @@ private slots:
 private:
     void heapify(std::vector<int>& data, int n, int i);
     void swap(std::vector<int>& data, int i1, int i2);
-    void buildHeap(std::vector<int>& data);
+    void buildHeap();
 
     std::vector<int> data_;
     int n_;
