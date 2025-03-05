@@ -20,7 +20,6 @@ void HeapSort::sort(std::vector<int>& data) {
     emit statusBarUpdated(n_, iterations_, comparisons_, arrayAccesses_);
 
     qDebug() << "HeapSort::sort - Начало сортировки";
-    // emit messageSent(QString("Начало сортировки"));
     emit messageSent(QString("Начало построения кучи"));
     buildHeap();
 }

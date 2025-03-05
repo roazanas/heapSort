@@ -2,7 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "heapsortview.h"
 #include "heapsort.h"
 
 namespace Ui {
